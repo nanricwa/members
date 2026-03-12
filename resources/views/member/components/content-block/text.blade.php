@@ -1,3 +1,3 @@
 <div class="prose prose-sm max-w-none">
-    {!! $content->body !!}
+    {!! nl2br(e($content->body)) !!}
 </div>
