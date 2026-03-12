@@ -14,18 +14,21 @@ class MemberRegistrationService
     public function register(RegistrationForm $form, array $data): Member
     {
         return DB::transaction(function () use ($form, $data) {
-            // 会員作成
+            $isPaid = ! $form->isFree();
+
+            // 会員作成（有料フォームの場合はpendingステータス）
             $member = Member::create([
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'name' => $data['name'],
                 'name_kana' => $data['name_kana'] ?? null,
-                'status' => 'active',
+                'status' => $isPaid ? 'pending' : 'active',
                 'email_verified_at' => now(),
             ]);
 
-            // プラン付与
-            if ($form->plan_id) {
+            // 無料フォームの場合のみ即座にプラン付与
+            // 有料フォームの場合はWebhookからの決済確認後にPaymentServiceが付与
+            if (! $isPaid && $form->plan_id) {
                 $member->plans()->attach($form->plan_id, [
                     'status' => 'active',
                     'started_at' => now(),

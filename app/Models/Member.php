@@ -24,6 +24,7 @@ class Member extends Authenticatable
         'last_login_at',
         'login_count',
         'note',
+        'stripe_customer_id',
     ];
 
     protected $hidden = [
@@ -77,6 +78,26 @@ class Member extends Authenticatable
     public function hasAnyActivePlan(array $planIds): bool
     {
         return $this->activePlans()->whereIn('plans.id', $planIds)->exists();
+    }
+
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
+    public function activeSubscriptions(): HasMany
+    {
+        return $this->subscriptions()->where('status', 'active');
+    }
+
+    public function emailLogs(): HasMany
+    {
+        return $this->hasMany(EmailLog::class);
     }
 
     public function isActive(): bool

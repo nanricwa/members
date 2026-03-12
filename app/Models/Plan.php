@@ -57,6 +57,16 @@ class Plan extends Model
         return $this->belongsToMany(Category::class, 'category_plan');
     }
 
+    public function payments(): HasMany
+    {
+        return $this->hasMany(Payment::class);
+    }
+
+    public function subscriptions(): HasMany
+    {
+        return $this->hasMany(Subscription::class);
+    }
+
     public function scopeActive($query)
     {
         return $query->where('is_active', true);

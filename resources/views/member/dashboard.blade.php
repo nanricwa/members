@@ -12,6 +12,24 @@
             <span class="text-gray-400">なし</span>
         @endforelse
     </p>
+
+    @php
+        $activeSubscriptions = $member->activeSubscriptions;
+    @endphp
+    @if($activeSubscriptions->isNotEmpty())
+        <div class="mt-4 pt-4 border-t">
+            <p class="text-sm text-gray-600 mb-2">有効なサブスクリプション：</p>
+            @foreach($activeSubscriptions as $sub)
+                <div class="inline-flex items-center bg-green-50 border border-green-200 rounded-md px-3 py-1.5 mr-2 mb-1">
+                    <span class="text-sm text-green-800">{{ $sub->plan?->name ?? 'プラン' }}</span>
+                    @if($sub->current_period_end)
+                        <span class="ml-2 text-xs text-green-600">次回: {{ $sub->current_period_end->format('m/d') }}</span>
+                    @endif
+                </div>
+            @endforeach
+            <a href="{{ route('member.subscriptions') }}" class="text-xs text-blue-600 hover:underline ml-2">管理</a>
+        </div>
+    @endif
 </div>
 
 <h2 class="text-lg font-bold text-gray-800 mb-4">コンテンツ一覧</h2>

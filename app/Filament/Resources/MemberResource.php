@@ -194,6 +194,8 @@ class MemberResource extends Resource
     {
         return [
             RelationManagers\PlansRelationManager::class,
+            RelationManagers\PaymentsRelationManager::class,
+            RelationManagers\SubscriptionsRelationManager::class,
         ];
     }
 
