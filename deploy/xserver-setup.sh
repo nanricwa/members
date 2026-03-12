@@ -14,7 +14,7 @@
 set -e
 
 # === 設定 ===
-GITHUB_REPO="YOUR_GITHUB_USERNAME/YOUR_REPO_NAME"  # ← 変更してください
+GITHUB_REPO="nanricwa/members"
 DOMAIN="online-syukyaku.net"
 SERVER_ID=$(whoami)  # Xserverのサーバーアカウント
 
