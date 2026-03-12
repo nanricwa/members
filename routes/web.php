@@ -6,6 +6,7 @@ use App\Http\Controllers\Member\DownloadController;
 use App\Http\Controllers\Member\PageController;
 use App\Http\Controllers\Member\ProfileController;
 use App\Http\Controllers\Member\RegistrationController;
+use App\Http\Controllers\Member\CourseController;
 use App\Http\Controllers\Member\SubscriptionController;
 use App\Http\Controllers\Payment\PaymentController;
 use Illuminate\Support\Facades\Route;
@@ -43,4 +44,10 @@ Route::prefix('mypage')->middleware('auth:member')->group(function () {
     // サブスクリプション管理
     Route::get('/subscriptions', [SubscriptionController::class, 'index'])->name('member.subscriptions');
     Route::post('/subscriptions/{subscription}/cancel', [SubscriptionController::class, 'cancel'])->name('member.subscriptions.cancel');
+
+    // コース
+    Route::get('/courses', [CourseController::class, 'index'])->name('member.courses');
+    Route::get('/courses/{course:slug}', [CourseController::class, 'show'])->name('member.course');
+    Route::get('/courses/{course:slug}/lessons/{lesson}', [CourseController::class, 'lesson'])->name('member.course.lesson');
+    Route::post('/courses/{course:slug}/lessons/{lesson}/complete', [CourseController::class, 'toggleComplete'])->name('member.course.lesson.complete');
 });

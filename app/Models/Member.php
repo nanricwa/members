@@ -100,6 +100,11 @@ class Member extends Authenticatable
         return $this->hasMany(EmailLog::class);
     }
 
+    public function lessonProgress(): HasMany
+    {
+        return $this->hasMany(MemberLessonProgress::class);
+    }
+
     public function isActive(): bool
     {
         return $this->status === MemberStatus::Active;

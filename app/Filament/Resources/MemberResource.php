@@ -196,6 +196,7 @@ class MemberResource extends Resource
             RelationManagers\PlansRelationManager::class,
             RelationManagers\PaymentsRelationManager::class,
             RelationManagers\SubscriptionsRelationManager::class,
+            RelationManagers\CourseProgressRelationManager::class,
         ];
     }
 

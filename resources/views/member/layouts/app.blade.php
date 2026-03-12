@@ -18,6 +18,7 @@
                 </div>
                 <div class="flex items-center space-x-4">
                     <span class="text-sm text-gray-600">{{ Auth::guard('member')->user()->name }} さん</span>
+                    <a href="{{ route('member.courses') }}" class="text-sm text-blue-600 hover:underline">コース</a>
                     <a href="{{ route('member.subscriptions') }}" class="text-sm text-blue-600 hover:underline">サブスク管理</a>
                     <a href="{{ route('member.profile') }}" class="text-sm text-blue-600 hover:underline">プロフィール</a>
                     <form method="POST" action="{{ route('member.logout') }}">

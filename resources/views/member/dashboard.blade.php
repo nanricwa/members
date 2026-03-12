@@ -32,6 +32,28 @@
     @endif
 </div>
 
+@if($courses->isNotEmpty())
+<h2 class="text-lg font-bold text-gray-800 mb-4">コース</h2>
+<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3 mb-8">
+    @foreach($courses as $course)
+        <a href="{{ route('member.course', $course->slug) }}"
+           class="bg-white rounded-lg shadow p-5 hover:shadow-md transition block">
+            <h3 class="font-bold text-gray-800 mb-1">{{ $course->title }}</h3>
+            @if($course->description)
+                <p class="text-sm text-gray-600 mb-3">{{ Str::limit($course->description, 80) }}</p>
+            @endif
+            <div class="w-full bg-gray-200 rounded-full h-2 mb-1">
+                <div class="bg-blue-600 h-2 rounded-full transition-all" style="width: {{ $course->progress_percentage }}%"></div>
+            </div>
+            <div class="flex justify-between text-xs text-gray-400">
+                <span>{{ $course->progress_percentage }}% 完了</span>
+                <span>{{ $course->total_lessons_count }}レッスン</span>
+            </div>
+        </a>
+    @endforeach
+</div>
+@endif
+
 <h2 class="text-lg font-bold text-gray-800 mb-4">コンテンツ一覧</h2>
 
 <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-3">

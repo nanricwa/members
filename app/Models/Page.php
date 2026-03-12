@@ -54,6 +54,11 @@ class Page extends Model
         return $this->belongsToMany(Plan::class, 'page_plan');
     }
 
+    public function courseLessons(): HasMany
+    {
+        return $this->hasMany(CourseLesson::class);
+    }
+
     public function scopePublished($query)
     {
         return $query->where('is_published', true)

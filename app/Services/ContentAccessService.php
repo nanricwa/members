@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Category;
+use App\Models\Course;
 use App\Models\Download;
 use App\Models\Member;
 use App\Models\MemberDownload;
@@ -77,5 +78,27 @@ class ContentAccessService
 
         return $query->get()
             ->filter(fn (Page $page) => $this->canAccessPage($member, $page));
+    }
+
+    public function canAccessCourse(Member $member, Course $course): bool
+    {
+        if (!$course->is_published) {
+            return false;
+        }
+
+        $coursePlanIds = $course->plans()->pluck('plans.id')->toArray();
+
+        // プラン制限がない場合はアクセス可能
+        if (empty($coursePlanIds)) {
+            return true;
+        }
+
+        return $member->hasAnyActivePlan($coursePlanIds);
+    }
+
+    public function getAccessibleCourses(Member $member): Collection
+    {
+        return Course::published()->ordered()->get()
+            ->filter(fn (Course $course) => $this->canAccessCourse($member, $course));
     }
 }

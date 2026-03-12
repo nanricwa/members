@@ -91,7 +91,16 @@ class PageResource extends Resource
                                             Forms\Components\TextInput::make('video_url')
                                                 ->label('動画URL')
                                                 ->url()
-                                                ->placeholder('https://www.youtube.com/watch?v=...'),
+                                                ->placeholder('https://www.youtube.com/watch?v=...')
+                                                ->live(onBlur: true)
+                                                ->afterStateUpdated(function (Forms\Set $set, ?string $state) {
+                                                    if (!$state) return;
+                                                    if (str_contains($state, 'youtube.com') || str_contains($state, 'youtu.be')) {
+                                                        $set('video_provider', 'youtube');
+                                                    } elseif (str_contains($state, 'vimeo.com')) {
+                                                        $set('video_provider', 'vimeo');
+                                                    }
+                                                }),
 
                                             Forms\Components\Select::make('video_provider')
                                                 ->label('プロバイダ')
