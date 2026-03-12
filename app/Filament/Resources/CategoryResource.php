@@ -123,7 +123,6 @@ class CategoryResource extends Resource
                 Tables\Filters\SelectFilter::make('parent_id')
                     ->label('親カテゴリ')
                     ->relationship('parent', 'name')
-                    ->nullable()
                     ->placeholder('すべて'),
             ])
             ->actions([
